@@ -1,1547 +1,1600 @@
 <html>
-	<head>
-		<title>{Title}</title>
-		<link rel="shortcut icon" href="{Favicon}">
-		<link rel="alternate" type="application/rss+xml" href="{RSS}">
-		{block:Description}
-		<meta name="description" content="{MetaDescription}" />
-		{/block:Description}
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-				<!-- Meta -->
-		<meta name="keywords" content="">
-		<meta itemprop="name" content="{Title}">
-		<meta itemprop="description" content="{MetaDescription}">
-		<meta itemprop="image" content="{Favicon}">
-		<!-- Social -->
-		<meta name="twitter:card" content="summary">
-		<meta name="twitter:title" content="{Title}">
-		<meta name="twitter:description" content="{MetaDescription}">
-		<meta name="twitter:image" content="{Favicon}">
-		<meta property="og:title" content="{Title}" />
-		<meta property="og:type" content="article" />
-		<meta property="og:image" content="{Favicon}" />
-		<meta property="og:description" content="{MetaDescription}" />
-		<meta property="og:site_name" content="{Title}" />
-		<!-- Android theme colour -->
-		<meta name="theme-color" content="#000" />
-		<!-- Theme options -->
-		<meta name="if:Scroll snap" content="0"/>
-		<meta name="select:Scroll speed" content="100" title="100ms">
-		<meta name="select:Scroll speed" content="200" title="200ms">
-		<meta name="select:Scroll speed" content="400" title="400ms">
-		<meta name="select:Scroll speed" content="800" title="800ms">
-		<meta name="select:Scroll speed" content="1000" title="1000ms">
-		<meta name="select:Header position" content="header-fixed" title="Fixed top left">
-		<meta name="select:Header position" content="header-slide" title="Full screen slide">
-		<meta name="select:Header position" content="header-hidden" title="Do not display">
-		<style>
-				html, html a {
-						-webkit-font-smoothing: antialiased;
-						text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
-				}
-				
-				html {
-					box-sizing: border-box;
-				}
-				
-				*, *:before, *:after {
-					box-sizing: inherit;
-				}
-				
-				body, div, article, section, figure, main {
-						margin: 0;
-						padding: 0;
-				}
-		
-				html, body, main {
-						height: 100%;
-				}
-				
-				body {
-						font: 16px/1.5em serif;
-						letter-spacing: 0.025em;
-						color: #000;
-				}
-				
-				em {
-						font-size: 0.857em;
-						font-style: italic;
-				}
-				
-				p {
-						line-height: 1.6em;
-				}
-				
-				a {
-						text-decoration: none;
-				}
-				
-				a:hover {
-						text-decoration: underline;
-				}
-				
-				a:focus,
-				a:active,
-				a:visited {
-						color: blue;
-				}
-				
-				button {
-						border: 0;
-						margin: 0;
-						padding: 0;
-				}
-				
-				code {
-						font-family: monospace;
-						font-size: 12px;
-						line-height: 1.4;
-						background: #f5f5f5;
-						border: 1px solid #ccc;
-						border-radius: 3px;
-						padding: 1px 3px;
-				}
-				
-				hr {
-						border: 0;
-						background: #000;
-						height: 1px;
-				}
-				
-				img { display: block; }
-				
-				.arrow {
-						font-family: sans-serif;
-				}
-				
-				/* ============================== */
-				/* Header styles */
-				/* ============================== */
-				.global-header {
-						padding: 20px;
-				}
-				
-				.global-header .pointer {
-						display: none;
-						text-align: center;
-						font-size: 20px;
-						margin-top: -40px;
-				}
-				
-				/* ============================== */
-				/* Header - fixed top left */
-				/* ============================== */
-				[data-header-position="header-fixed"] .global-header,
-				[data-header-position="header-slide"].permalink .global-header {
-						position: fixed;
-						top: 0;
-						left: 0;
-						width: 100%;
-						max-width: 320px;
-						z-index: 1000;
-						text-align: left;
-				}
-				
-				/* ============================== */
-				/* Heaer - full page slide */
-				/* ============================== */
-				[data-header-position="header-slide"] .global-header {
-						width: 100%;
-						height: 80%;
-						text-align: center;
-				}
-				
-				[data-header-position="header-slide"] .global-header__table {
-						display: table;
-						width: 100%;
-						height: 100%;
-				}
-				
-				[data-header-position="header-slide"] .global-header__table-cell {
-						display: table-cell;
-						vertical-align: middle;
-						height: 100%;
-				}
-				
-				[data-header-position="header-slide"] .global-header .pointer {
-						display: block;
-				}
-				
-				[data-header-position="header-slide"].permalink .global-header .pointer {
-						display: none;
-				}
-				
-				[data-header-position="header-hidden"] .global-header h1,
-				[data-header-position="header-hidden"] .global-header .description {
-						display: none;
-				}
-				
-				/* ============================== */
-				/* Header when on permalink page */
-				/* ============================== */
-				[data-header-position="header-slide"].permalink .global-header {
-						padding-top: 18px;
-				}
-				
-				[data-header-position="header-slide"].permalink .global-header__table-cell,
-				[data-header-position="header-slide"].permalink .global-header__table {
-						display: block;
-						height: auto;
-				}
-				
-				.permalink .global-header h1,
-				.permalink .description {
-						display: none;
-				}
-				
-				/* ============================== */
-				/* Post styles */
-				/* ============================== */
-				.posts {
-						height: 100%;
-				}
-				
-				/*
-				Options:
-				
-				Backgrounds
-				- light - default DONE
-				- dark DONE
-				- color (hex code or name)
-				
-				Photo
-				- center - default DONE
-				- left DONE
-				- right DONE
-				- full DONE
-				
-				Photoset
-				- slideshow - default DONE
-				- if 2
-						- medium left | medium right - default DONE
-						- large left | small right DONE
-						- small left | large right DONE
-				- if 3 (optional)
-						- medium | medium | medium DONE
-						
-				Panorama
-				- full width 20 margin - default DONE
-						
-				Video
-				- Video 700 center center - default
-				
-				Text
-				- 
-				
-				
-				*/
-		
-				/* ============================== */
-				/* Post global */
-				/* ============================== */
-				.post {
-						position: relative;
-						height: 100%;
-						background: #fefefe;
-						overflow: hidden;
-				}
-				
-				.permalink .post {
-						min-height: 100%;
-						overflow: visible;
-						overflow-x: hidden;
-				}
-				
-				.post-inner {
-						height: 100%;
-				}
-				
-				.post-inner__table {
-						display: table;
-						width: 100%;
-						height: 100%;
-						padding: 40px 0;
-				}
-				
-				.post-inner__table-cell {
-						display: table-cell;
-						vertical-align: middle;
-				}
-				
-				.post.photo img {
-						display: none;
-				}
-				
-				/* ============================== */
-				/* Backgrounds */
-				/* ============================== */
-				.post.background_dark {
-						background-color: #000;
-				}
-				
-				.post.background_dark a,
-				.post.background_dark {
-						color: #fff;
-				}
-				
-				/* ============================== */
-				/* Overlay */
-				/* ============================== */
-				.info-trigger {
-						position: absolute;
-						bottom: 15px;
-						right: 10px;
-						z-index: 102;
-				}
-				
-				.permalink .info-trigger {
-						display: none;
-				}
-				
-				.info-trigger > a {
-						display: inline-block;
-						padding: 5px 10px;
-						border-radius: 2px;
-						background: rgba(255,255,255,0.75);
-				}
-				
-				.background_dark .info-trigger > a {
-						background: #444;
-				}
-				
-				.info-trigger a:hover {
-						text-decoration: underline;
-				}
-				
-				.overlay-active .info-trigger > a {
-						text-decoration: underline;
-				}
-				
-				.post.background_dark .info-overlay {
-						background: rgba(0,0,0,0.9);
-				}
-				
-				.info-overlay {
-						position: absolute;
-						top: 0;
-						right: 0;
-						bottom: 0;
-						left: 0;
-						background: rgba(255,255,255,0.9);
-						opacity: 0;
-						visibility: hidden;
-						-webkit-transform: scale(1.15);
-						-ms-transform: scale(1.15);
-						transform: scale(1.15);
-						z-index: 101;
-				}
-				
-				.info-overlay .table {
-						display: table;
-						width: 100%;
-						height: 100%;
-				}
-				
-				.info-overlay .table-cell {
-						display: table-cell;
-						vertical-align: middle;
-						height: 100%;
-						overflow: scroll;
-				}
-				
-				.info-overlay .content {
-						width: 100%;
-						max-width: 680px;
-						margin: 0 auto;
-						text-align: center;
-						padding: 40px;
-				}
-				
-				/* ============================== */
-				/* Post globals */
-				/* ============================== */
-				/* All images are positioned centrally like this */
-				.post.photo img[src] {
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						-webkit-transform: translate(-50%, -50%);
-						-ms-transform: translate(-50%, -50%);
-						transform: translate(-50%, -50%);
-						display: block;
-						max-width: calc(100% - 80px);
-						max-height: calc(100% - 80px);
-				}
-				
-				.post.photo figure:hover > figcaption {
-						opacity: 1;
-				}
-				
-				.post figcaption {
-						opacity: 0;
-						position: relative;
-						display: inline-block;
-						max-width: 450px;
-						margin: 0 auto;
-				}
-				
-				.caption-trigger {
-						font-size: 16px;
-						background: rgba(255,255,255,0.85);
-						margin: 0;
-						padding: 0 5px 4px 4px;
-						border-radius: 3px;
-						line-height: 1em;
-						cursor: pointer;
-						outline: none;
-						-webkit-transition: transform 200ms ease;
-						transition: transform 200ms ease;
-				}
-				
-				.active .caption-trigger {
-						-webkit-transform: rotate(45deg);
-						-ms-transform: rotate(45deg);
-						transform: rotate(45deg);
-				}
-				
-				.caption-popup {
-						position: absolute;
-						bottom: 100%;
-						left: 50%;
-						width: 250px;
-						-webkit-transform: translate(-50%, 50%) scale(0.1);
-						-ms-transform: translate(-50%, 50%) scale(0.1);
-						transform: translate(-50%, 50%) scale(0.1);
-						font-size: 11px;
-						font-style: italic;
-						line-height: 1.2em;
-						text-align: center;
-						opacity: 0;
-						visibility: hidden;
-						padding: 6px;
-						border-radius: 3px;
-						background: rgba(255,255,255,0.85);
-						transition: transform 200ms ease, opacity 100ms ease, visibility 100ms ease;
-				}
-				
-				.active .caption-popup {
-						-webkit-transform: translateX(-50%) scale(1);
-						-ms-transform: translateX(-50%) scale(1);
-						transform: translateX(-50%) scale(1);
-						opacity: 1;
-						visibility: visible;
-				}
-				
-				.post.background_dark figcaption {
-						color: #fff;
-				}
-				
-				/* ============================== */
-				/* Post types */
-				/* ============================== */
-				/* ============================== */
-				/* Text */
-				.quote .post-inner,
-				.link .post-inner,
-				.text .post-inner {
-						max-width: 650px;
-						margin: 0 auto;
-						padding: 0 20px;
-						text-align: center;
-				}
-				
-				/* ============================== */
-				/* Text - text align left */
-				.text_left .post-inner__table {
-						text-align: left;
-				}
-				
-				/* ============================== */
-				/* Text - text align right */
-				.text_right .post-inner__table {
-						text-align: right;
-				}
-				
-				/* ============================== */
-				/* Photo - center */
-				.post.photo .single-image figure {
-						width: 100%;
-						height: 100%;
-				}
-				
-				/* ============================== */
-				/* Photo - left */
-				.post.photo_left img[src] {
-						left: 40px;
-						-webkit-transform: translate(0, -50%);
-						-ms-transform: translate(0, -50%);
-						transform: translate(0, -50%);
-				}
-				
-				/* ============================== */
-				/* Photo - right */
-				.post.photo_right img[src] {
-						left: auto;
-						right: 40px;
-						-webkit-transform: translate(0, -50%);
-						-ms-transform: translate(0, -50%);
-						transform: translate(0, -50%);
-				}
-				
-				/* ============================== */
-				/* Photo - full */
-				.post.photo_full {
-						background-size: cover;
-						background-position: center center;
-						background-repeat: no-repeat;
-				}
-				
-				/* ============================== */
-				/* Photoset - 2 slides - global */
-				.post.photo.two-up .slide {
-						position: relative;
-						float: left;
-						width: 50%;
-						height: 100%;
-						background-size: cover;
-						background-position: center center;
-						background-repeat: no-repeat;
-				}
-				
-				/* ============================== */
-				/* Photoset - 2 slides - standard */
-				.post.photo.two-up .slide figure {
-						position: absolute;
-						display: block;
-						top: 50%;
-						left: 50%;
-						width: 100%;
-						height: 100%;
-						padding: 40px;
-						-webkit-transform: translate(-50%, -50%);
-						-ms-transform: translate(-50%, -50%);
-						transform: translate(-50%, -50%);
-						text-align: center;
-				}
-				
-				.photo.two-up .slide figcaption {
-						position: absolute;
-						bottom: 15px;
-						left: 50%;
-						-webkit-transform: translateX(-50%);
-						-ms-transform: translateX(-50%);
-						transform: translateX(-50%);
-				}
-				
-				/* ============================== */
-				/* Photoset - 2 slides - large left AND large right */
-				/* Small image */
-				.post.photo .large-left .slide:last-child figure,
-				.post.photo .large-right .slide:first-child figure {
-						position: absolute;
-						top: 50%;
-						left: auto;
-						right: 25%;
-						width: 50%;
-						height: auto;
-						-webkit-transform: translate(0, -50%);
-						-ms-transform: translate(0, -50%);
-						transform: translate(0, -50%);
-						text-align: center;
-				}
-				
-				.post.photo .large-right .slide:first-child figure {
-						right: auto;
-						left: 25%;
-				}
-				
-				.post.photo .large-left .slide:last-child figure img,
-				.post.photo .large-right .slide:first-child figure img {
-						position: static;
-						top: auto;
-						left: auto;
-						-webkit-transform: translate(0);
-						-ms-transform: translate(0);
-						transform: translate(0);
-						display: inline-block;
-						max-width: 100%;
-						max-height: 100%;
-				}
-				
-				.post.photo .large-left .slide:first-child figcaption,
-				.post.photo .large-right .slide:last-child figcaption {
-						position: absolute;
-						bottom: 0;
-						left: 0;
-						width: 100%;
-						padding: 8px 12px;
-						background: rgba(255,255,255,0.7);
-						max-width: none;
-				}
-				
-				/* Large image */
-				.post.photo .large-right .slide:last-child figure, 
-				.post.photo .large-left .slide:first-child figure {
-						position: absolute;
-						bottom: 0;
-						left: 0;
-						width: 100%;
-						-webkit-transform: translate(0);
-						-ms-transform: translate(0);
-						transform: translate(0);
-				}
-						
-				
-				/* ============================== */
-				/* Photoset - 3 slides - global */
-				.post.photo.three-up .slides {
-						padding: 0 0.75%;
-				}
-				
-				.post.photo.three-up .slide {
-						position: relative;
-						float: left;
-						width: 33.333%;
-						display: table;
-						padding: 0 15px;
-				}
-				
-				.post.photo.three-up figure {
-						display: table-cell;
-						vertical-align: middle;
-						height: 100%;
-				}
-				
-				.post.photo.three-up figcaption {
-						margin: 11px 0 0 0;
-				}
-				
-				.post.photo.three-up img[src] {
-						position: static;
-						display: block;
-						-webkit-transform: translate(0);
-						-ms-transform: translate(0);
-						transform: translate(0);
-						max-width: 100%;
-				}
-				
-				/* ============================== */
-				/* Photoset - slideshow */
-				.slideshow, 
-				.slideshow .slides,
-				.slideshow .slides .slide {
-						width: 100%;
-						height: 100%;
-						margin: 0;
-						padding: 0;
-						list-style: none;
-				}
-				
-				.slideshow .slides {
-						position: relative;
-						overflow: hidden;
-				}
-				
-				.slideshow-active .slideshow .slides .slide {
-						position: absolute;
-						top: 0;
-						left: 0;
-						opacity: 0;
-						z-index: 0;
-				}
-				
-				.slideshow .slides .slide:first-child {
-						position: relative;
-						opacity: 1;
-				}
-				
-				.slideshow-active figure {
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						width: 100%;
-						height: 100%;
-						-webkit-transform: translate(-50%, -50%);
-						-ms-transform: translate(-50%, -50%);
-						transform: translate(-50%, -50%);
-						text-align: center;
-				}
+  <head>
+    <title>{Title}</title>
+    <link rel="shortcut icon" href="{Favicon}">
+    <link rel="alternate" type="application/rss+xml" href="{RSS}">
+    {block:Description}
+    <meta name="description" content="{MetaDescription}" />
+    {/block:Description}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Meta -->
+    <meta name="keywords" content="">
+    <meta itemprop="name" content="{Title}">
+    <meta itemprop="description" content="{MetaDescription}">
+    <meta itemprop="image" content="{Favicon}">
+    <!-- Social -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{Title}">
+    <meta name="twitter:description" content="{MetaDescription}">
+    <meta name="twitter:image" content="{Favicon}">
+    <meta property="og:title" content="{Title}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="{Favicon}" />
+    <meta property="og:description" content="{MetaDescription}" />
+    <meta property="og:site_name" content="{Title}" />
+    <!-- Android theme colour -->
+    <meta name="theme-color" content="#000" />
+    <!-- Theme options -->
+    <!--<meta name="if:Scroll snap" content="0"/>-->
+    <!--<meta name="select:Scroll speed" content="100" title="100ms">-->
+    <!--<meta name="select:Scroll speed" content="200" title="200ms">-->
+    <!--<meta name="select:Scroll speed" content="400" title="400ms">-->
+    <!--<meta name="select:Scroll speed" content="800" title="800ms">-->
+    <!--<meta name="select:Scroll speed" content="1000" title="1000ms">-->
+    <meta name="select:Header position" content="header-fixed" title="Fixed top left">
+    <meta name="select:Header position" content="header-slide" title="Full screen slide">
+    <meta name="select:Header position" content="header-hidden" title="Do not display">
+    <style>
+        html, html a {
+            -webkit-font-smoothing: antialiased;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+        }
+        
+        html {
+          box-sizing: border-box;
+        }
+        
+        *, *:before, *:after {
+          box-sizing: inherit;
+        }
+        
+        body, div, article, section, figure, main {
+            margin: 0;
+            padding: 0;
+        }
+    
+        html, body, main {
+            height: 100%;
+        }
+        
+        body {
+            font: 16px/1.5em serif;
+            letter-spacing: 0.025em;
+            color: #000;
+        }
+        
+        .loading * {
+            cursor: wait !important;
+        }
+        
+        em {
+            font-size: 0.857em;
+            font-style: italic;
+        }
+        
+        p {
+            line-height: 1.6em;
+        }
+        
+        a {
+            /*transition: color 150ms ease;*/
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        a:focus,
+        a:active,
+        a:visited {
+            color: blue;
+        }
+        
+        button {
+            border: 0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        code {
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.4;
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 1px 3px;
+        }
+        
+        hr {
+            border: 0;
+            background: #000;
+            height: 1px;
+        }
+        
+        img { display: block; }
+        
+        .arrow {
+            font-family: sans-serif;
+        }
+        
+        /* ============================== */
+        /* Header styles */
+        /* ============================== */
+        .global-header {
+            padding: 20px;
+        }
+        
+        .global-header .pointer {
+            display: none;
+            text-align: center;
+            font-size: 20px;
+            margin-top: -40px;
+        }
+        
+        /* ============================== */
+        /* Header - fixed top left */
+        /* ============================== */
+        [data-header-position="header-fixed"] .global-header,
+        [data-header-position="header-slide"].permalink .global-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            max-width: 320px;
+            z-index: 1000;
+            text-align: left;
+        }
+        
+        /* ============================== */
+        /* Heaer - full page slide */
+        /* ============================== */
+        [data-header-position="header-slide"] .global-header {
+            width: 100%;
+            height: 80%;
+            text-align: center;
+        }
+        
+        [data-header-position="header-slide"] .global-header__table {
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
+        
+        [data-header-position="header-slide"] .global-header__table-cell {
+            display: table-cell;
+            vertical-align: middle;
+            height: 100%;
+        }
+        
+        [data-header-position="header-slide"] .global-header .pointer {
+            display: block;
+        }
+        
+        [data-header-position="header-slide"].permalink .global-header .pointer {
+            display: none;
+        }
+        
+        [data-header-position="header-hidden"] .global-header h1,
+        [data-header-position="header-hidden"] .global-header .description {
+            display: none;
+        }
+        
+        /* ============================== */
+        /* Header when on permalink page */
+        /* ============================== */
+        [data-header-position="header-slide"].permalink .global-header {
+            padding-top: 18px;
+        }
+        
+        [data-header-position="header-slide"].permalink .global-header__table-cell,
+        [data-header-position="header-slide"].permalink .global-header__table {
+            display: block;
+            height: auto;
+        }
+        
+        .permalink .global-header h1,
+        .permalink .description {
+            display: none;
+        }
+        
+        /* ============================== */
+        /* Post styles */
+        /* ============================== */
+        .posts {
+            height: 100%;
+        }
+        
+        /*
+        Options:
+        
+        Backgrounds
+        - light - default DONE
+        - dark DONE
+        - color (hex code or name)
+        
+        Photo
+        - center - default DONE
+        - left DONE
+        - right DONE
+        - full DONE
+        
+        Photoset
+        - slideshow - default DONE
+        - if 2
+            - medium left | medium right - default DONE
+            - large left | small right DONE
+            - small left | large right DONE
+        - if 3 (optional)
+            - medium | medium | medium DONE
+            
+        Panorama
+        - full width 20 margin - default DONE
+            
+        Video
+        - Video 700 center center - default
+        
+        Text
+        - 
+        
+        
+        */
+    
+        /* ============================== */
+        /* Post global */
+        /* ============================== */
+        .post {
+            position: relative;
+            height: 100%;
+            background: #fefefe;
+            overflow: hidden;
+        }
+        
+        .permalink .post {
+            min-height: 100%;
+            overflow: visible;
+            overflow-x: hidden;
+        }
+        
+        .post-inner {
+            height: 100%;
+        }
+        
+        .post-inner__table {
+            display: table;
+            width: 100%;
+            height: 100%;
+            padding: 40px 0;
+        }
+        
+        .post-inner__table-cell {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        
+        .post.photo img {
+            display: none;
+        }
+        
+        /* ============================== */
+        /* Backgrounds */
+        /* ============================== */
+        .post.background_dark {
+            background-color: #000;
+        }
+        
+        .post.background_dark a,
+        .post.background_dark {
+            color: #fff;
+        }
+        
+        /* ============================== */
+        /* Overlay */
+        /* ============================== */
+        .info-trigger {
+            position: absolute;
+            bottom: 15px;
+            right: 10px;
+            z-index: 102;
+        }
+        
+        .permalink .info-trigger {
+            display: none;
+        }
+        
+        .info-trigger > a {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 2px;
+            background: rgba(255,255,255,0.75);
+        }
+        
+        .background_dark .info-trigger > a {
+            background: #444;
+        }
+        
+        .info-trigger a:hover {
+            text-decoration: underline;
+        }
+        
+        .overlay-active .info-trigger > a {
+            text-decoration: underline;
+        }
+        
+        .post.background_dark .info-overlay {
+            background: rgba(0,0,0,0.9);
+        }
+        
+        .info-overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(255,255,255,0.9);
+            opacity: 0;
+            visibility: hidden;
+            -webkit-transform: scale(1.15);
+            -ms-transform: scale(1.15);
+            transform: scale(1.15);
+            z-index: 101;
+        }
+        
+        .info-overlay .table {
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .info-overlay .table-cell {
+            display: table-cell;
+            vertical-align: middle;
+            height: 100%;
+            overflow: scroll;
+        }
+        
+        .info-overlay .content {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        /* ============================== */
+        /* Post globals */
+        /* ============================== */
+        /* All images are positioned centrally like this */
+        .post.photo img[src] {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            display: block;
+            max-width: calc(100% - 80px);
+            max-height: calc(100% - 80px);
+        }
+        
+        .post.photo figure:hover > figcaption {
+            opacity: 1;
+        }
+        
+        .post figcaption {
+            opacity: 0;
+            position: relative;
+            display: inline-block;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+        
+        .caption-trigger {
+            font-size: 16px;
+            background: rgba(255,255,255,0.85);
+            margin: 0;
+            padding: 0 5px 4px 4px;
+            border-radius: 3px;
+            line-height: 1em;
+            cursor: pointer;
+            outline: none;
+            -webkit-transition: transform 200ms ease;
+            transition: transform 200ms ease;
+        }
+        
+        .active .caption-trigger {
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+        
+        .caption-popup {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            width: 250px;
+            -webkit-transform: translate(-50%, 50%) scale(0.1);
+            -ms-transform: translate(-50%, 50%) scale(0.1);
+            transform: translate(-50%, 50%) scale(0.1);
+            font-size: 11px;
+            font-style: italic;
+            line-height: 1.2em;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            padding: 6px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.85);
+            transition: transform 200ms ease, opacity 100ms ease, visibility 100ms ease;
+        }
+        
+        .active .caption-popup {
+            -webkit-transform: translateX(-50%) scale(1);
+            -ms-transform: translateX(-50%) scale(1);
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .post.background_dark figcaption {
+            color: #fff;
+        }
+        
+        /* ============================== */
+        /* Post types */
+        /* ============================== */
+        /* ============================== */
+        /* Text */
+        .quote .post-inner,
+        .link .post-inner,
+        .text .post-inner {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        
+        /* ============================== */
+        /* Text - text align left */
+        .text_left .post-inner__table {
+            text-align: left;
+        }
+        
+        /* ============================== */
+        /* Text - text align right */
+        .text_right .post-inner__table {
+            text-align: right;
+        }
+        
+        /* ============================== */
+        /* Photo - center */
+        .post.photo .single-image figure {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* ============================== */
+        /* Photo - left */
+        .post.photo_left img[src] {
+            left: 40px;
+            -webkit-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+        
+        /* ============================== */
+        /* Photo - right */
+        .post.photo_right img[src] {
+            left: auto;
+            right: 40px;
+            -webkit-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+        }
+        
+        /* ============================== */
+        /* Photo - full */
+        .post.photo_full {
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        
+        /* ============================== */
+        /* Photoset - 2 slides - global */
+        .post.photo.two-up .slide {
+            position: relative;
+            float: left;
+            width: 50%;
+            height: 100%;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+        }
+        
+        /* ============================== */
+        /* Photoset - 2 slides - standard */
+        .post.photo.two-up .slide figure {
+            position: absolute;
+            display: block;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .photo.two-up .slide figcaption {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            -webkit-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+        }
+        
+        /* ============================== */
+        /* Photoset - 2 slides - large left AND large right */
+        /* Small image */
+        .post.photo .large-left .slide:last-child figure,
+        .post.photo .large-right .slide:first-child figure {
+            position: absolute;
+            top: 50%;
+            left: auto;
+            right: 25%;
+            width: 50%;
+            height: auto;
+            -webkit-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+            text-align: center;
+        }
+        
+        .post.photo .large-right .slide:first-child figure {
+            right: auto;
+            left: 25%;
+        }
+        
+        .post.photo .large-left .slide:last-child figure img,
+        .post.photo .large-right .slide:first-child figure img {
+            position: static;
+            top: auto;
+            left: auto;
+            -webkit-transform: translate(0);
+            -ms-transform: translate(0);
+            transform: translate(0);
+            display: inline-block;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        
+        .post.photo .large-left .slide:first-child figcaption,
+        .post.photo .large-right .slide:last-child figcaption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.7);
+            max-width: none;
+        }
+        
+        /* Large image */
+        .post.photo .large-right .slide:last-child figure, 
+        .post.photo .large-left .slide:first-child figure {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            -webkit-transform: translate(0);
+            -ms-transform: translate(0);
+            transform: translate(0);
+        }
+            
+        
+        /* ============================== */
+        /* Photoset - 3 slides - global */
+        .post.photo.three-up .slides {
+            padding: 0 0.75%;
+        }
+        
+        .post.photo.three-up .slide {
+            position: relative;
+            float: left;
+            width: 33.333%;
+            display: table;
+            padding: 0 15px;
+        }
+        
+        .post.photo.three-up figure {
+            display: table-cell;
+            vertical-align: middle;
+            height: 100%;
+        }
+        
+        .post.photo.three-up figcaption {
+            margin: 11px 0 0 0;
+        }
+        
+        .post.photo.three-up img[src] {
+            position: static;
+            display: block;
+            -webkit-transform: translate(0);
+            -ms-transform: translate(0);
+            transform: translate(0);
+            max-width: 100%;
+        }
+        
+        /* ============================== */
+        /* Photoset - slideshow */
+        .slideshow, 
+        .slideshow .slides,
+        .slideshow .slides .slide {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .slideshow .slides {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slideshow-active .slideshow .slides .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            z-index: 0;
+        }
+        
+        .slideshow .slides .slide:first-child {
+            position: relative;
+            opacity: 1;
+        }
+        
+        .slideshow-active figure {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
 
-				.slideshow-navigation {
-						display: none;
-				}
-				
-				.slideshow-active .slideshow-navigation {
-						display: block;
-				}
-				
-				.slideshow-navigation .next button,
-				.slideshow-navigation .previous button {
-						position: absolute;
-						top: 50%;
-						padding: 5px 10px;
-						border-radius: 2px;
-						background: none;
-						-webkit-transition: border-color 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-						transition: border-color 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
-						z-index: 100;
-						outline: none;
-						cursor: pointer;
-						font-size: 1em;
-						letter-spacing: 0.025em;
-						font-family: serif;
-						box-sizing: border-box;
-						-webkit-transform: translateY(-50%);
-						-ms-transform: translateY(-50%);
-						transform: translateY(-50%);
-						color: blue;
-						background: rgba(255,255,255,0.75);
-				}
-				
-				.slideshow-navigation .next button {
-						right: 10px; 
-				}
-				
-				.slideshow-navigation .previous button {
-						left: 10px;
-				}
-				
-				.slideshow-navigation .next button:hover,
-				.slideshow-navigation .previous button:hover {
-						text-decoration: underline;
-						/*color: navy;*/
-				}
-				
-				.slideshow-navigation .next .icon,
-				.slideshow-navigation .previous .icon {
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						display: block;
-						content: "";
-						width: 10px;
-						height: 10px;
-						margin-top: -5px;
-						border-top: 1px solid #222;
-				}
-				
-				.slideshow-navigation .next .icon {
-						border-right: 1px solid #222;
-						-webkit-transform: rotate(45deg);
-						-ms-transform: rotate(45deg);
-						transform: rotate(45deg);
-						margin-left: -7px;
-				}
-				
-				.slideshow-navigation .previous .icon {
-						border-left: 1px solid #222;
-						-webkit-transform: rotate(-45deg);
-						-ms-transform: rotate(-45deg);
-						transform: rotate(-45deg);
-						margin-left: -3px;
-				}
-				
-				/* ============================== */
-				/* Video - all */
-				.video .post-inner {
-						display: table;
-						width: 100%;
-				}
-				
-				.video .video-container {
-						display: table-cell;
-						vertical-align: middle;
-						text-align: center;
-				}
-				
-				.video .tumblr_video_container {
-						display: inline-block;
-				}
-				
-				.video iframe {
-						display: inline-block;
-						margin: 0 auto;
-				}
-				
-				/* ============================== */
-				/* Video - fullscreen background */
-				.video.video_full .post-inner {
-						display: block;
-				}
-				
-				.video.video_full .video-container {
-						position: absolute;
-						top: 0;
-						right: 0;
-						bottom: 0;
-						left: 0;
-				}
-				
-				.video.video_full .tumblr_video_container,
-				.video.video_full iframe {
-						display: block;
-						width: 100% !important;
-						height: 100% !important;
-				}
-				
-				/* ============================== */
-				/* Audio */
-				/* ============================== */
-				.audio {
-						padding: 0 30px;
-				}
-				
-				.audio iframe {
-						position: relative;
-						top: 50%;
-						-webkit-transform: translateY(-50%);
-						-ms-transform: translateY(-50%);
-						transform: translateY(-50%);
-						width: 100%;
-				}
-				
-				/* ============================== */
-				/* Chat */
-				/* ============================== */
-				.chat {}
-				
-				.chat .post-inner {
-						display: block;
-						width: 100%;
-						text-align: center;
-				}
-				
-				.chat-list {
-						max-width: 500px;
-						margin: 0 auto;
-						padding: 0 20px;
-				}
-				
-				.chat-list:after {
-						content: "";
-						clear: both;
-						display: table;
-				}
-				
-				.chat-list > li {
-						display: block;
-						margin: 8px 0;
-						border-radius: 4px;
-						padding: 10px;
-						background: #eee;
-						line-height: 1.35em;
-				}
-				
-				.chat-list .label {
-						font-weight: bold;
-				}
-				
-				.chat-list .odd {
-						width: 75%;
-						float: left;
-						text-align: left;
-				}
-				
-				.chat-list .even {
-						width: 75%;
-						float: right;
-						text-align: right;
-				}
-				
-				/* Read more */
-				.read-more {
-						display: none;
-						transform: translateY(-100%);
-						text-align: center;
-						background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-						background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-						background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
-						filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
-				}
-				
-				.read-more.active {
-						display: block;
-				}
-				
-				.permalink .read-more.active {
-						display: none;
-				}
-				
-				.read-more a {
-						display: inline-block;
-						padding: 200px 0 20px 0;
-				}
-				
-				/* ============================== */
-				/* Tags */
-				/* ============================== */
-				.tags {
-						margin: 0;
-						padding: 0;
-						list-style: none;
-				}
-				
-				.tags .tag {
-						display: inline-block;
-				}
-				
-				.tags .tag a {
-						background: #f5f5f5;
-						border: 1px solid #ccc;
-						border-radius: 3px;
-						padding: 1px 3px;
-						font-family: monospace;
-						font-size: 13px;
-						text-decoration: none;
-				}
-				
-				.tags .tag a:hover {
-						text-decoration: underline;
-				}
-				
-				.background_dark .tags .tag a {
-						background: #444;
-				}
-				
-				/* ============================== */
-				/* Pagination */
-				/* ============================== */
-				.pagination {
-						display: none; 
-				}
-		</style>
-		<style>
-				{CustomCSS}
-		</style>
-	</head>
-	<body {block:IfScrollSnap}data-scroll-snap="true"{/block:IfScrollSnap} data-header-position="{select:Header position}" {block:PermalinkPage}class="permalink"{/block:PermalinkPage} {block:TagPage}class=""{/block:TagPage}>
-		<header class="global-header">
-				<div class="global-header__table">
-						<div class="global-header__table-cell">
-							<h1><a href="{BlogURL}">{Title}</a></h1>
-							{block:Description}
-							<p class="description">{Description}</p>
-							{/block:Description}
-							{block:PermalinkPage}
-									<a href="{BlogURL}"><span class="arrow">&larr;</span> back</a>
-							{/block:PermalinkPage}
-						</div>
-			</div>
-			<div class="pointer arrow">&darr;</div>
-		</header>
-		
-		<main role="main">
-				<div class="posts">
-					{block:Posts}
-						<article class="post {PostType} {TagsAsClasses}">
-						
-								{block:Text}
-										<div class="post-inner">
-												<div class="post-inner__table">
-														<div class="post-inner__table-cell">
-																{block:Title}
-																<h2><a href="{Permalink}">{Title}</a></h2>
-																{/block:Title}{Body}
-														</div>
-												</div>
-										</div>
-								{/block:Text}
-								
-								{block:Photo}
-										<div class="post-inner single-image">
-												<figure>
-														{block:LinkURL}
-																<a href="{LinkURL}" target="_blank">
-														{/block:LinkURL}
-																		<img data-src="{PhotoURL-HighRes}" alt="{PhotoAlt}"/>
-														{block:LinkURL}
-																</a>
-														{/block:LinkURL}
-												</figure>
-										</div>
-								{/block:Photo}
-								
-								{block:Photoset}
-										<div class="post-inner photoset">
-												<div class="slideshow" data-slide-count="{PhotoCount}">
-														<ul class="slides">
-														{block:Photos}
-																<li class="slide">
-																		<figure>
-																				<img src="{PhotoURL-HighRes}" />
-																				{block:Caption}
-																				<figcaption>
-																						<button class="caption-trigger">+</button>
-																						<div class="caption-popup">
-																								{Caption}
-																						</div>
-																				</figcaption>
-																				{/block:Caption}
-																		</figure>
-																</li>
-														{/block:Photos}
-														</ul>
-														<ul class="slideshow-navigation">
-															<li class="previous"><button>Prev</button></li>
-															<li class="next"><button>Next</button></button></li>
-														</ul>
-												</div>
-										</div>
-								{/block:Photoset}
-								
-								{block:Panorama}
-										<div class="post-inner">
-												{LinkOpenTag}
-														<img src="{PhotoURL-Panorama}" alt="{PhotoAlt}"/>
-												{LinkCloseTag}
-										</div>
-								{/block:Panorama}
-								
-								{block:Quote}
-										<div class="post-inner">
-												<div class="post-inner__table">
-														<div class="post-inner__table-cell">
-																<h1>"{Quote}"</h1>
-																{block:Source}
-																<div class="source">- {Source}</div>
-																{/block:Source}
-														</div>
-												</div>
-										</div>
-								{/block:Quote}
-								
-								{block:Link}
-										<div class="post-inner">
-												<div class="post-inner__table">
-														<div class="post-inner__table-cell">
-																<h1><a href="{URL}" class="link" {Target}>{Name}</a></h1>
-																{block:Description}
-																<div class="description">{Description}</div>
-																{/block:Description}
-														</div>
-												</div>
-										</div>
-								{/block:Link}
-								
-								{block:Chat}
-										<div class="post-inner">
-												<div class="post-inner__table">
-														<div class="post-inner__table-cell">
-														{block:Title}
-																<h2><a href="{Permalink}">{Title}</a></h2>
-														{/block:Title}
-																<ul class="chat-list">
-																	{block:Lines}
-																	<li class="{Alt} user_{UserNumber}">
-																		{block:Label}
-																		<span class="label">{Label}</span>
-																		{/block:Label}{Line}
-																	</li>
-																	{/block:Lines}
-																</ul>
-														</div>
-												</div>
-										</div>
-								{/block:Chat}
-								
-								{block:Video}
-										<div class="post-inner">
-												<div class="video-container">
-														{Video-500}
-												</div>
-										</div>
-								{/block:Video}
-								
-								{block:Audio}
-										<div class="post-inner">
-												{AudioEmbed}
-										</div>
-								{/block:Audio}
-						
-								<div class="info-trigger"><a href="#">Info</a></div>
-								<div class="info-overlay">
-										<div class="background"></div>
-										<div class="table">
-												<div class="table-cell">
-														<div class="content">
-																{block:Caption}
-																		{Caption}
-																{/block:Caption}
-																{block:HasTags}
-																	<ul class="tags">
-																		{block:Tags}
-																				<li class="tag">
-																						<a href="{TagURL}">#{Tag}</a>
-																				</li>
-																		{/block:Tags}
-																	</ul>
-																{/block:HasTags}
-																<p class="post-note-count"><a href="{Permalink}">{NoteCountWithLabel}</a></p>
-														</div>
-												</div>
-										</div>
-								</div>
-								<div class="read-more"><a href="{Permalink}">Read more...</a></div>
-					</article>
-					{/block:Posts}
-				</div>
-				{block:PermalinkPage}
-						<footer>
-								<time itemprop="dateCreated" datetime="{block:Date}{DayOfMonthWithZero}-{MonthNumberWithZero}-{Year}{/block:Date}">{block:Date}{DayOfMonthWithZero}/{MonthNumberWithZero}/{Year}{/block:Date}</time>
-								<p class="note-count">{NoteCountWithLabel}</p>
-								{block:PostNotes}
-										{PostNotes-16}
-								 {/block:PostNotes}
-						</footer>
-				{/block:PermalinkPage}
-				<div class="pagination">
-				{block:NextPage}
-						<a href="{NextPage}" class="next-page">Next &#187;</a>
-				{/block:NextPage}
-				</div>
-		</main>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js"></script>
-		<script>		
-			var STORY = STORY || {};
+        .slideshow-navigation {
+            display: none;
+        }
+        
+        .slideshow-active .slideshow-navigation {
+            display: block;
+        }
+        
+        .slideshow-navigation .next button,
+        .slideshow-navigation .previous button {
+            position: absolute;
+            top: 50%;
+            padding: 5px 10px;
+            border-radius: 2px;
+            background: none;
+            -webkit-transition: border-color 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+            transition: border-color 200ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+            z-index: 100;
+            outline: none;
+            cursor: pointer;
+            font-size: 1em;
+            letter-spacing: 0.025em;
+            font-family: serif;
+            box-sizing: border-box;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            color: blue;
+            background: rgba(255,255,255,0.75);
+        }
+        
+        .slideshow-navigation .next button {
+            right: 10px; 
+        }
+        
+        .slideshow-navigation .previous button {
+            left: 10px;
+        }
+        
+        .slideshow-navigation .next button:hover,
+        .slideshow-navigation .previous button:hover {
+            text-decoration: underline;
+            /*color: navy;*/
+        }
+        
+        .slideshow-navigation .next .icon,
+        .slideshow-navigation .previous .icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            display: block;
+            content: "";
+            width: 10px;
+            height: 10px;
+            margin-top: -5px;
+            border-top: 1px solid #222;
+        }
+        
+        .slideshow-navigation .next .icon {
+            border-right: 1px solid #222;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+            margin-left: -7px;
+        }
+        
+        .slideshow-navigation .previous .icon {
+            border-left: 1px solid #222;
+            -webkit-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            margin-left: -3px;
+        }
+        
+        /* ============================== */
+        /* Video - all */
+        .video .post-inner {
+            display: table;
+            width: 100%;
+        }
+        
+        .video .video-container {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+        
+        .video .tumblr_video_container {
+            display: inline-block;
+        }
+        
+        .video iframe {
+            display: inline-block;
+            margin: 0 auto;
+        }
+        
+        /* ============================== */
+        /* Video - fullscreen background */
+        .video.video_full .post-inner {
+            display: block;
+        }
+        
+        .video.video_full .video-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        
+        .video.video_full .tumblr_video_container,
+        .video.video_full iframe {
+            display: block;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        
+        /* ============================== */
+        /* Audio */
+        /* ============================== */
+        .audio {
+            padding: 0 30px;
+        }
+        
+        .audio iframe {
+            position: relative;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            width: 100%;
+        }
+        
+        /* ============================== */
+        /* Chat */
+        /* ============================== */
+        .chat {}
+        
+        .chat .post-inner {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .chat-list {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .chat-list:after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        
+        .chat-list > li {
+            display: block;
+            margin: 8px 0;
+            border-radius: 4px;
+            padding: 10px;
+            background: #eee;
+            line-height: 1.35em;
+        }
+        
+        .chat-list .label {
+            font-weight: bold;
+        }
+        
+        .chat-list .odd {
+            width: 75%;
+            float: left;
+            text-align: left;
+        }
+        
+        .chat-list .even {
+            width: 75%;
+            float: right;
+            text-align: right;
+        }
+        
+        /* Read more */
+        .read-more {
+            display: none;
+            transform: translateY(-100%);
+            text-align: center;
+            background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+            background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+            background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
+        }
+        
+        .read-more.active {
+            display: block;
+        }
+        
+        .permalink .read-more.active {
+            display: none;
+        }
+        
+        .read-more a {
+            display: inline-block;
+            padding: 200px 0 20px 0;
+        }
+        
+        /* ============================== */
+        /* Tags */
+        /* ============================== */
+        .tags {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        
+        .tags .tag {
+            display: inline-block;
+        }
+        
+        .tags .tag a {
+            background: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 1px 3px;
+            font-family: monospace;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        
+        .tags .tag a:hover {
+            text-decoration: underline;
+        }
+        
+        .background_dark .tags .tag a {
+            background: #444;
+        }
+        
+        /* ============================== */
+        /* Pagination */
+        /* ============================== */
+        .pagination {
+            display: none; 
+        }
+    </style>
+    <style>
+        {CustomCSS}
+    </style>
+  </head>
+  <body {block:IfScrollSnap}data-scroll-snap="true"{/block:IfScrollSnap} data-header-position="{select:Header position}" {block:PermalinkPage}class="permalink"{/block:PermalinkPage} {block:TagPage}class=""{/block:TagPage}>
+  	<header class="global-header">
+  	    <div class="global-header__table">
+  	        <div class="global-header__table-cell">
+        	    <h1><a href="{BlogURL}">{Title}</a></h1>
+        	    {block:Description}
+        	    <p class="description">{Description}</p>
+        	    {/block:Description}
+        	    {block:PermalinkPage}
+        	        <a href="{BlogURL}"><span class="arrow">&larr;</span> back</a>
+        	    {/block:PermalinkPage}
+        	    <p>
+            	    {block:AskEnabled}
+            	    <a href="/ask">/ask</a>
+            	    {/block:AskEnabled}
+            	    {block:SubmissionsEnabled}
+            	    <a href="/submit">/submit</a>
+            	    {/block:SubmissionsEnabled}
+        	    </p>
+        	    <p>
+        	        {block:HasPages}
+            	        {block:Pages}
+            	            <a href="{URL}">{Label}</a>
+            	        {/block:Pages}
+            	    {/block:HasPages}
+        	    </p>
+            </div>
+	    </div>
+	    <div class="pointer arrow">&darr;</div>
+    </header>
+    
+    <main role="main">
+        <div class="posts">
+          {block:Posts}
+            <article class="post {PostType} {TagsAsClasses}">
+            
+                {block:Text}
+                    <div class="post-inner">
+                        <div class="post-inner__table">
+                            <div class="post-inner__table-cell">
+                                {block:Title}
+                                <h2><a href="{Permalink}">{Title}</a></h2>
+                                {/block:Title}{Body}
+                            </div>
+                        </div>
+                    </div>
+                {/block:Text}
+                
+                {block:Photo}
+                    <div class="post-inner single-image">
+                        <figure>
+                            {block:LinkURL}
+                                <a href="{LinkURL}" target="_blank">
+                            {/block:LinkURL}
+                                    <img data-src="{PhotoURL-HighRes}" alt="{PhotoAlt}"/>
+                            {block:LinkURL}
+                                </a>
+                            {/block:LinkURL}
+                        </figure>
+                    </div>
+                {/block:Photo}
+                
+                {block:Photoset}
+                    <div class="post-inner photoset">
+                        <div class="slideshow" data-slide-count="{PhotoCount}">
+                            <ul class="slides">
+                            {block:Photos}
+                                <li class="slide">
+                                    <figure>
+                                        <img src="{PhotoURL-HighRes}" />
+                                        {block:Caption}
+                                        <figcaption>
+                                            <button class="caption-trigger">+</button>
+                                            <div class="caption-popup">
+                                                {Caption}
+                                            </div>
+                                        </figcaption>
+                                        {/block:Caption}
+                                    </figure>
+                                </li>
+                            {/block:Photos}
+                            </ul>
+                            <ul class="slideshow-navigation">
+                              <li class="previous"><button>Prev</button></li>
+                              <li class="next"><button>Next</button></button></li>
+                            </ul>
+                        </div>
+                    </div>
+                {/block:Photoset}
+                
+                {block:Panorama}
+                    <div class="post-inner">
+                        {LinkOpenTag}
+                            <img src="{PhotoURL-Panorama}" alt="{PhotoAlt}"/>
+                        {LinkCloseTag}
+                    </div>
+                {/block:Panorama}
+                
+                {block:Quote}
+                    <div class="post-inner">
+                        <div class="post-inner__table">
+                            <div class="post-inner__table-cell">
+                                <h1>"{Quote}"</h1>
+                                {block:Source}
+                                <div class="source">- {Source}</div>
+                                {/block:Source}
+                            </div>
+                        </div>
+                    </div>
+                {/block:Quote}
+                
+                {block:Link}
+                    <div class="post-inner">
+                        <div class="post-inner__table">
+                            <div class="post-inner__table-cell">
+                                <h1><a href="{URL}" class="link" {Target}>{Name}</a></h1>
+                                {block:Description}
+                                <div class="description">{Description}</div>
+                                {/block:Description}
+                            </div>
+                        </div>
+                    </div>
+                {/block:Link}
+                
+                {block:Chat}
+                    <div class="post-inner">
+                        <div class="post-inner__table">
+                            <div class="post-inner__table-cell">
+                            {block:Title}
+                                <h2><a href="{Permalink}">{Title}</a></h2>
+                            {/block:Title}
+                                <ul class="chat-list">
+                                  {block:Lines}
+                                  <li class="{Alt} user_{UserNumber}">
+                                    {block:Label}
+                                    <span class="label">{Label}</span>
+                                    {/block:Label}{Line}
+                                  </li>
+                                  {/block:Lines}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {/block:Chat}
+                
+                {block:Video}
+                    <div class="post-inner">
+                        <div class="video-container">
+                            {Video-500}
+                        </div>
+                    </div>
+                {/block:Video}
+                
+                {block:Audio}
+                    <div class="post-inner">
+                        {AudioEmbed}
+                    </div>
+                {/block:Audio}
+    	      
+                <div class="info-trigger"><a href="#">Info</a></div>
+                <div class="info-overlay">
+                    <div class="background"></div>
+                    <div class="table">
+                        <div class="table-cell">
+                            <div class="content">
+                                {block:Caption}
+                                    {Caption}
+                                {/block:Caption}
+                                {block:HasTags}
+                                  <ul class="tags">
+                                    {block:Tags}
+                                        <li class="tag">
+                                            <a href="{TagURL}">#{Tag}</a>
+                                        </li>
+                                    {/block:Tags}
+                                  </ul>
+                                {/block:HasTags}
+                                <p class="post-note-count"><a href="{Permalink}">{NoteCountWithLabel}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="read-more"><a href="{Permalink}">Read more...</a></div>
+    	    </article>
+          {/block:Posts}
+        </div>
+        {block:PermalinkPage}
+            <footer>
+                <time itemprop="dateCreated" datetime="{block:Date}{DayOfMonthWithZero}-{MonthNumberWithZero}-{Year}{/block:Date}">{block:Date}{DayOfMonthWithZero}/{MonthNumberWithZero}/{Year}{/block:Date}</time>
+                <p class="note-count">{NoteCountWithLabel}</p>
+                {block:PostNotes}
+                    {PostNotes-16}
+                 {/block:PostNotes}
+            </footer>
+        {/block:PermalinkPage}
+        <div class="pagination">
+        {block:NextPage}
+            <a href="{NextPage}" class="next-page"></a>
+        {/block:NextPage}
+        </div>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.transit/0.9.12/jquery.transit.min.js"></script>
+    <script>
+    
+        var STORY = STORY || {};
 
-			STORY.Slideshow = function(selector, options) {
-			
-				"use strict";
-				
-				var totalSlides = 0;
-				var currentSlideID = 0;
-				var animating = 0;
-			
-				function init() {
-					totalSlides = selector.find('.slide').length;
-					if (totalSlides > 1) {
-						prepareSlides();
-						createListeners();
-					} else {
-						selector.find('.slideshow-navigation').hide();
-					}
-				}
-			
-				function prepareSlides() {
-					var slides = selector.find('.slide');
-					var i = 0, length = slides.length;
-					if (options.slide) {
-						for (; i < length; i++) {
-							if (i !== currentSlideID) {
-								if ($.transit) {
-									slides[i].style.transform = 'translateX(20%)';
-								}
-								slides[i].style.opacity = '0';
-							}
-						}
-					} else {
-						for (; i < length; i++) {
-							slides[i].style.zIndex = 5;
-						}
-						slides[0].style.zIndex = 10;
-					}
-				}
-			
-				function showSlide(slideID, reverse) {
-					if (slideID !== currentSlideID && !animating) {
-						animating = true;
-						var animateOutValues = {},
-								animateInValues = {},
-								nextStartValues = {},
-								prevStartValues = {},
-								slide = selector.find('.slide');
-						if (options.slide) {
-							if (reverse) {
-								animateOutValues = {transform: 'translate3d(20%, 0, 0)', opacity: 0};
-								nextStartValues = {transform: 'translate3d(-20%, 0, 0)', opacity: 0};
-							} else {
-								animateOutValues = {transform: 'translate3d(-20%, 0, 0)', opacity: 0};
-								nextStartValues = {transform: 'translate3d(20%, 0, 0)', opacity: 0};
-							}
-							animateInValues = {transform: 'translate3d(0, 0, 0)', opacity: 1};
-							prevStartValues = {};
-						} else {
-							animateOutValues = {opacity: 0};
-							animateInValues = {opacity: 1};
-							prevStartValues = {opacity: 1, zIndex: 5};
-							nextStartValues = {opacity: 0, zIndex: 10};
-						}
-						if ($.transit) {
-							// Transit is enabled, use that for smoother transitions...
-							slide.eq(currentSlideID).stop().css(prevStartValues).transition(animateOutValues, options.duration, options.easing);
-							slide.eq(slideID).stop().css(nextStartValues).transition(animateInValues, options.duration, options.easing, function() { onAnimationComplete(); });
-						} else {
-							// Otherwise, just use jquery animate
-							slide.eq(currentSlideID).stop().css(prevStartValues).animate(animateOutValues, options.duration);
-							slide.eq(slideID).stop().css(nextStartValues).animate(animateInValues, options.duration, function() { onAnimationComplete(); });
-						}
-						// The slideID given to this function is now the currentSlideID
-						currentSlideID = slideID;
-					}
-				}
-			
-				function onAnimationComplete() {
-					animating = false;
-				}
-			
-				function onNextClicked(e) {
-					e.preventDefault();
-					nextSlide();
-				}
-			
-				function nextSlide() {
-					if (!animating) {
-						var nextSlideID = currentSlideID + 1;
-						if (nextSlideID > (totalSlides - 1)) {
-							nextSlideID = 0;
-						}
-						showSlide(nextSlideID);
-					}
-				}
-			
-				function onPreviousClicked(e) {
-					e.preventDefault();
-					previousSlide();
-				}
-			
-				function previousSlide() {
-					if (!animating) {
-						var previousSlideID = currentSlideID - 1;
-						if (previousSlideID < 0) {
-							previousSlideID = totalSlides - 1;
-						}
-						showSlide(previousSlideID, true);
-					}
-				}
-				
-				function onCaptionTriggerClicked(e) {
-						console.log(e)
-						$(e.currentTarget).closest('figcaption').toggleClass('active');
-				}
-			
-				function onWindowKeydown(e) {
-					if (e.keyCode === 37) {
-						previousSlide();
-					} else if (e.keyCode === 39) {
-						nextSlide();
-					}
-				}
-			
-				function createListeners() {
-					selector.find('.next').on('click', function(e) { onNextClicked(e); });
-					selector.find('.previous').on('click', function(e) { onPreviousClicked(e); });
-					$('.caption-trigger').on('click', function(e) { onCaptionTriggerClicked(e) });
-					$(window).on('keydown', function(e) { onWindowKeydown(e); });
-				}
-			
-				init();
-			
-				return {
-					reposition: prepareSlides,
-					getCurrentSlideID: function() { return currentSlideID },
-					showSlide: showSlide,
-					nextSlide: nextSlide,
-					previousSlide: previousSlide
-				}
-			}
-	
-			var STORY = STORY || {};
-			
-			STORY.posts = function() {
-			
-					_public = {};
-					
-					_private = {
-							
-							SELECTOR: $('body'),
-							totalPosts: 0,
-							postSettings: [],
-							animationDuration: 500, 
-							animationEasing: 'cubic-bezier(0.77, 0, 0.175, 1)',
-							animating: false,
-							scrollSnapEnabled: false,
-							resizeTimer: null,
-							currentPostID: 0,
-							nextUrl: '',
-							loading: false,
-							scrolling: false,
-							currentScrollTime: 0,
-							prevScrollTime: 0,
-							lastScrollTop: 0,
-							
-							init: function () {
-									this.prevScrollTime = new Date();
-									this.nextUrl = $('.next-page').attr('href');
-									this.getTotalPosts();
-									this.preparePosts();
-									this.createScrollbar();
-									if (this.SELECTOR.data('scroll-snap')) {
-											this.scrollSnapEnabled = true;
-									}
-									this.checkPostHeight();
-									this.createListeners();
-							},
-							
-							getTotalPosts: function() {
-									this.totalPosts = this.SELECTOR.find('.post').length;
-							},
-							
-							checkTotalPosts: function() {
-									return this.SELECTOR.find('.post').length;
-							},
-							
-							createScrollbar: function() {
-									// this.SELECTOR.find('.info-overlay').nanoScroller();
-							},
-							
-							preparePosts: function() {
-									// Run through all posts and decide what to
-									// do based on the post's class.
-									var i = 0, post = this.SELECTOR.find('.post');
-									for(; i < this.totalPosts; i++) {
-											var eachPost = $(post[i]);
-											// Photo - full
-											if (eachPost.hasClass('photo_full')) {
-													var url = eachPost.find('[data-src]').data('src');
-													eachPost.css({ backgroundImage: 'url('+url+')' });
-											// Photo - everything else
-											} else {
-													var img = eachPost.find('[data-src]');
-													var src = img.data('src');
-													img.attr('src', src);
-											}
-											// Photoset
-											if (eachPost.find('.slideshow')) {
-													var slideshow = eachPost.find('.slideshow');
-													var slideCount = slideshow.data('slide-count');
-													// If the photoset only contains 2 images, do the 2-up thing
-													if (slideCount === 2 && eachPost.hasClass('two_up')) {
-															// At the very least, we need to tell our post element
-															// that we have 2 images in this photoset.
-															eachPost.addClass('two-up');
-															
-															// Then we can specify if the admin would like
-															// to have a large left image or a large right image.
-															// Whatever is chosen, the opposite image will be smaller.
-															if (eachPost.hasClass('large_left') || eachPost.hasClass('large_right')) {
-																	var largeSlideEl = null;
-																	if (eachPost.hasClass('large_left')) {
-																			slideshow.addClass('large-left');
-																			largeSlide = eachPost.find('.slide:first-child');
-																	} else if (eachPost.hasClass('large_right')) {
-																			slideshow.addClass('large-right');
-																			largeSlide = eachPost.find('.slide:last-child');
-																	}
-																	// When doing the large image, make it a background image
-																	var url = largeSlide.find('img').attr('src');
-																	largeSlide.css({ backgroundImage: 'url('+url+')' });
-																	// ...and remove the inline version, not needed at all.
-																	largeSlide.find('img').remove();
-															}
-													} else if (slideCount === 3 && eachPost.hasClass('triptych')) {
-															// We need to tell our post element
-															// that we have 3 images in this photoset.
-															eachPost.addClass('three-up');
-													} else if (slideCount >= 2 && !eachPost.hasClass('triptych')) {
-															eachPost.addClass('slideshow-active');
-													var slideshowOptions = {
-														slide: false,
-														duration: 600,
-														easing: 'easeInOutQuart'
-													}
-													slideshow = new STORY.Slideshow(slideshow, slideshowOptions);
-													}
-											}
-									}
-							},
-							
-							// ===============================
-							// Information overlay
-							// ===============================
-							toggleInfo: function(id) {
-									var overlay = this.SELECTOR.find('.post').eq(id).find('.info-overlay');
-									if (overlay.hasClass('active')) {
-											this.closeInfo(id, false);
-									} else {
-											this.openInfo(id);
-									}
-							},
-							
-							openInfo: function(id) {
-									if (!this.animating) {
-											this.animating = true;
-											var post = this.SELECTOR.find('.post').eq(id);
-											var overlay = post.find('.info-overlay');
-											post.addClass('overlay-active');
-											overlay.addClass('active');
-											overlay.transition({ scale: 1, opacity: 1, visibility: 'visible' }, this.animationDuration, this.animationEasing, function() { _private.animating = false; });
-									}
-							},
-							
-							closeInfo: function(id, immediate) {
-									if (!this.animating) {
-											this.animating = true;
-											var post = this.SELECTOR.find('.post').eq(id);
-											var overlay = post.find('.info-overlay');
-											post.removeClass('overlay-active');
-											overlay.removeClass('active');
-											if (immediate) {
-													overlay.removeAttr('style');
-											} else {
-													overlay.transition({ scale: 1.2, opacity: 0, visibility: 'hidden' }, this.animationDuration, this.animationEasing, function() { _private.animating = false; });
-											}
-									}
-							},
-							
-							// ===============================
-							// Scroll snapping
-							// ===============================
-							showNextPost: function() {
-									if (!this.scrolling && this.currentPostID < this.checkTotalPosts() - 1) {
-											this.currentPostID++;
-											this.showPost(this.currentPostID);
-									}
-							},
-							
-							showPreviousPost: function() {
-									if (!this.scrolling && this.currentPostID > 0) {
-											this.currentPostID--;
-											this.showPost(this.currentPostID);
-									}
-							},
-							
-							showPost: function(id) {
-									this.scrolling = true;
-									$('html, body').animate({ scrollTop: $('.post').eq(id).offset().top }, {select:Scroll speed}, function() {
-											_private.scrolling = false;
-											_private.currentPostID = id;
-									});
-							},
-							
-							// ===============================
-							// Load more
-							// ===============================
-							checkLoadMore: function() {
-									var scrollTop = $(window).scrollTop();
-									var windowHeight = $(window).height();
-									var docHeight = $(document).height();
-									if ((scrollTop + windowHeight) > (docHeight - 100)) {
-											this.loadNextPage();
-									}
-							},
-							
-							loadNextPage: function() {
-									if (!this.loading) {
-											if (this.nextUrl) {
-													this.loading = true;
-													$.ajax({
-														 beforeSend: this.beforeLoad(),
-														 url: this.nextUrl,
-														 success: function(data) {
-																 _private.loadComplete(data);
-														 }
-													});
-											} else {
-													console.log('you are at the end');
-											}
-									}
-							},
-							
-							beforeLoad: function() {
-									console.log('before load');
-							},
-							
-							loadComplete: function(data) {
-									var posts = $(data).find('.posts').html();
-									this.nextUrl = $(data).find('.next-page').attr('href');
-									$('.posts').append(posts);
-									this.loading = false;
-									// Prepare all new posts
-									this.getTotalPosts();
-									this.preparePosts();
-							},
-							
-							reactToMouseWheel: function(evt) {
-									if (!evt) evt = event;
-									var direction = (evt.detail<0 || evt.wheelDelta>0) ? 1 : -1;
-							},
-							
-							// ===============================
-							// Listeners stuff
-							// ===============================
-							onInfoTriggerClicked: function (e) {
-								e.preventDefault();
-								e.stopPropagation();
-								var id = $(e.currentTarget).closest('.post').index();
-								this.toggleInfo(id);
-							},
-							
-							beginScrollSnap: function(e) {
-								var scrollTop = $(window).scrollTop();
-								if (scrollTop > this.lastScrollTop){
-										console.log('down scroll')
-								} else {
-										console.log('up scroll')
-								}
-								this.lastScrollTop = scrollTop;
-								e.stopPropagation();
-								e.preventDefault();
-							},
-							
-							onWindowScroll: function(e) {
-								if (this.scrollSnapEnabled) {
-										this.beginScrollSnap(e)
-								}
-								if (!this.scrollTimer) this.scrollTimer = setTimeout(function() {_private.loadMoreScrolling();}, 100);
-							},
-							
-							loadMoreScrolling: function() {
-								if (this.scrollTimer) {
-									clearTimeout(this.scrollTimer);
-									this.scrollTimer = null;
-								}
-								this.checkLoadMore();
-							},
-							
-							checkPostHeight: function() {
-									this.SELECTOR.find('.post').each(function() {
-											var table = $(this).find('.post-inner__table');
-											var _readMore = $(this).find('.read-more');
-											if (table.outerHeight() > $(window).height()) {
-													_readMore.addClass('active');
-											} else {
-													_readMore.removeClass('active');
-											}
-									})
-							},
-							
-							onWindowKeyup: function(e) {
-									e.preventDefault();
-									e.stopPropagation();
-									if (e.keyCode === 40) {
-											this.showNextPost();
-									} else if (e.keyCode === 38) {
-											this.showPreviousPost();
-									}
-							},
-							
-							onWindowResize: function (e) {
-									this.checkPostHeight();
-							},
-							
-							createListeners: function() {
-									this.SELECTOR.on('click', '.info-trigger a', function(e) { _private.onInfoTriggerClicked(e); });
-									$(window).on('scroll', function(e) { _private.onWindowScroll(e); });
-									$(window).on('resize', function(e) { _private.onWindowResize(e); });
-							}
-					}
-					
-					_private.init();
-					return _public;
-			}
-			
-			STORY.posts();
-		</script>
-	</body>
+        STORY.Slideshow = function(selector, options) {
+        
+        	"use strict";
+        	
+        	var totalSlides = 0;
+        	var currentSlideID = 0;
+        	var animating = 0;
+        
+        	function init() {
+        		totalSlides = selector.find('.slide').length;
+        		if (totalSlides > 1) {
+        			prepareSlides();
+        			createListeners();
+        		} else {
+        			selector.find('.slideshow-navigation').hide();
+        		}
+        	}
+        
+        	function prepareSlides() {
+        		var slides = selector.find('.slide');
+        		var i = 0, length = slides.length;
+        		if (options.slide) {
+        			for (; i < length; i++) {
+        				if (i !== currentSlideID) {
+        					if ($.transit) {
+        						slides[i].style.transform = 'translateX(20%)';
+        					}
+        					slides[i].style.opacity = '0';
+        				}
+        			}
+        		} else {
+        			for (; i < length; i++) {
+        				slides[i].style.zIndex = 5;
+        			}
+        			slides[0].style.zIndex = 10;
+        		}
+        	}
+        
+        	function showSlide(slideID, reverse) {
+        		if (slideID !== currentSlideID && !animating) {
+        			animating = true;
+        			var animateOutValues = {},
+        					animateInValues = {},
+        					nextStartValues = {},
+        					prevStartValues = {},
+        					slide = selector.find('.slide');
+        			if (options.slide) {
+        				if (reverse) {
+        					animateOutValues = {transform: 'translate3d(20%, 0, 0)', opacity: 0};
+        					nextStartValues = {transform: 'translate3d(-20%, 0, 0)', opacity: 0};
+        				} else {
+        					animateOutValues = {transform: 'translate3d(-20%, 0, 0)', opacity: 0};
+        					nextStartValues = {transform: 'translate3d(20%, 0, 0)', opacity: 0};
+        				}
+        				animateInValues = {transform: 'translate3d(0, 0, 0)', opacity: 1};
+        				prevStartValues = {};
+        			} else {
+        				animateOutValues = {opacity: 0};
+        				animateInValues = {opacity: 1};
+        				prevStartValues = {opacity: 1, zIndex: 5};
+        				nextStartValues = {opacity: 0, zIndex: 10};
+        			}
+        			if ($.transit) {
+        				// Transit is enabled, use that for smoother transitions...
+        				slide.eq(currentSlideID).stop().css(prevStartValues).transition(animateOutValues, options.duration, options.easing);
+        				slide.eq(slideID).stop().css(nextStartValues).transition(animateInValues, options.duration, options.easing, function() { onAnimationComplete(); });
+        			} else {
+        				// Otherwise, just use jquery animate
+        				slide.eq(currentSlideID).stop().css(prevStartValues).animate(animateOutValues, options.duration);
+        				slide.eq(slideID).stop().css(nextStartValues).animate(animateInValues, options.duration, function() { onAnimationComplete(); });
+        			}
+        			// The slideID given to this function is now the currentSlideID
+        			currentSlideID = slideID;
+        		}
+        	}
+        
+        	function onAnimationComplete() {
+        		animating = false;
+        	}
+        
+        	function onNextClicked(e) {
+        		e.preventDefault();
+        		nextSlide();
+        	}
+        
+        	function nextSlide() {
+        		if (!animating) {
+        			var nextSlideID = currentSlideID + 1;
+        			if (nextSlideID > (totalSlides - 1)) {
+        				nextSlideID = 0;
+        			}
+        			showSlide(nextSlideID);
+        		}
+        	}
+        
+        	function onPreviousClicked(e) {
+        		e.preventDefault();
+        		previousSlide();
+        	}
+        
+        	function previousSlide() {
+        		if (!animating) {
+        			var previousSlideID = currentSlideID - 1;
+        			if (previousSlideID < 0) {
+        				previousSlideID = totalSlides - 1;
+        			}
+        			showSlide(previousSlideID, true);
+        		}
+        	}
+        	
+        	function onCaptionTriggerClicked(e) {
+        	    console.log(e)
+        	    $(e.currentTarget).closest('figcaption').toggleClass('active');
+        	}
+        
+        	function onWindowKeydown(e) {
+        		if (e.keyCode === 37) {
+        			previousSlide();
+        		} else if (e.keyCode === 39) {
+        			nextSlide();
+        		}
+        	}
+        
+        	function createListeners() {
+        		selector.find('.next').on('click', function(e) { onNextClicked(e); });
+        		selector.find('.previous').on('click', function(e) { onPreviousClicked(e); });
+        		$('.caption-trigger').on('click', function(e) { onCaptionTriggerClicked(e) });
+        		$(window).on('keydown', function(e) { onWindowKeydown(e); });
+        	}
+        
+        	init();
+        
+        	return {
+        		reposition: prepareSlides,
+        		getCurrentSlideID: function() { return currentSlideID },
+        		showSlide: showSlide,
+        		nextSlide: nextSlide,
+        		previousSlide: previousSlide
+        	}
+        }
+    
+        var STORY = STORY || {};
+        
+        STORY.posts = function() {
+        
+            _public = {};
+            
+            _private = {
+                
+                SELECTOR: $('body'),
+                totalPosts: 0,
+                postSettings: [],
+                animationDuration: 500, 
+                animationEasing: 'cubic-bezier(0.77, 0, 0.175, 1)',
+                animating: false,
+                scrollSnapEnabled: false,
+                resizeTimer: null,
+                currentPostID: 0,
+                nextUrl: '',
+                loading: false,
+                scrolling: false,
+                currentScrollTime: 0,
+                prevScrollTime: 0,
+                lastScrollTop: 0,
+                scrollEvent: null,
+                
+                init: function () {
+                    this.prevScrollTime = new Date();
+                    this.nextUrl = $('.next-page').attr('href');
+                    this.getTotalPosts();
+                    this.preparePosts();
+                    this.createScrollbar();
+                    if (this.SELECTOR.data('scroll-snap')) {
+                        this.scrollSnapEnabled = true;
+                    }
+                    this.checkPostHeight();
+                    this.createListeners();
+                },
+                
+                getTotalPosts: function() {
+                    this.totalPosts = this.SELECTOR.find('.post').length;
+                },
+                
+                checkTotalPosts: function() {
+                    return this.SELECTOR.find('.post').length;
+                },
+                
+                createScrollbar: function() {
+                    // this.SELECTOR.find('.info-overlay').nanoScroller();
+                },
+                
+                preparePosts: function() {
+                    // Run through all posts and decide what to
+                    // do based on the post's class.
+                    var i = 0, post = this.SELECTOR.find('.post');
+                    for(; i < this.totalPosts; i++) {
+                        var eachPost = $(post[i]);
+                        // Photo - full
+                        if (eachPost.hasClass('photo_full')) {
+                            var url = eachPost.find('[data-src]').data('src');
+                            eachPost.css({ backgroundImage: 'url('+url+')' });
+                        // Photo - everything else
+                        } else {
+                            var img = eachPost.find('[data-src]');
+                            var src = img.data('src');
+                            img.attr('src', src);
+                        }
+                        // Photoset
+                        if (eachPost.find('.slideshow')) {
+                            var slideshow = eachPost.find('.slideshow');
+                            var slideCount = slideshow.data('slide-count');
+                            // If the photoset only contains 2 images, do the 2-up thing
+                            if (slideCount === 2 && eachPost.hasClass('two_up')) {
+                                // At the very least, we need to tell our post element
+                                // that we have 2 images in this photoset.
+                                eachPost.addClass('two-up');
+                                
+                                // Then we can specify if the admin would like
+                                // to have a large left image or a large right image.
+                                // Whatever is chosen, the opposite image will be smaller.
+                                if (eachPost.hasClass('large_left') || eachPost.hasClass('large_right')) {
+                                    var largeSlideEl = null;
+                                    if (eachPost.hasClass('large_left')) {
+                                        slideshow.addClass('large-left');
+                                        largeSlide = eachPost.find('.slide:first-child');
+                                    } else if (eachPost.hasClass('large_right')) {
+                                        slideshow.addClass('large-right');
+                                        largeSlide = eachPost.find('.slide:last-child');
+                                    }
+                                    // When doing the large image, make it a background image
+                                    var url = largeSlide.find('img').attr('src');
+                                    largeSlide.css({ backgroundImage: 'url('+url+')' });
+                                    // ...and remove the inline version, not needed at all.
+                                    largeSlide.find('img').remove();
+                                }
+                            } else if (slideCount === 3 && eachPost.hasClass('triptych')) {
+                                // We need to tell our post element
+                                // that we have 3 images in this photoset.
+                                eachPost.addClass('three-up');
+                            } else if (slideCount >= 2 && !eachPost.hasClass('triptych')) {
+                                eachPost.addClass('slideshow-active');
+                        		var slideshowOptions = {
+                        			slide: false,
+                        			duration: 600,
+                        			easing: 'easeInOutQuart'
+                        		}
+                        		slideshow = new STORY.Slideshow(slideshow, slideshowOptions);
+                            }
+                        }
+                    }
+                },
+                
+                // ===============================
+                // Information overlay
+                // ===============================
+                toggleInfo: function(id) {
+                    var overlay = this.SELECTOR.find('.post').eq(id).find('.info-overlay');
+                    if (overlay.hasClass('active')) {
+                        this.closeInfo(id, false);
+                    } else {
+                        this.openInfo(id);
+                    }
+                },
+                
+                openInfo: function(id) {
+                    if (!this.animating) {
+                        this.animating = true;
+                        var post = this.SELECTOR.find('.post').eq(id);
+                        var overlay = post.find('.info-overlay');
+                        post.addClass('overlay-active');
+                        overlay.addClass('active');
+                        overlay.transition({ scale: 1, opacity: 1, visibility: 'visible' }, this.animationDuration, this.animationEasing, function() { _private.animating = false; });
+                    }
+                },
+                
+                closeInfo: function(id, immediate) {
+                    if (!this.animating) {
+                        this.animating = true;
+                        var post = this.SELECTOR.find('.post').eq(id);
+                        var overlay = post.find('.info-overlay');
+                        post.removeClass('overlay-active');
+                        overlay.removeClass('active');
+                        if (immediate) {
+                            overlay.removeAttr('style');
+                        } else {
+                            overlay.transition({ scale: 1.2, opacity: 0, visibility: 'hidden' }, this.animationDuration, this.animationEasing, function() { _private.animating = false; });
+                        }
+                    }
+                },
+                
+                // ===============================
+                // Scroll snapping
+                // ===============================
+                showNextPost: function() {
+                    if (!this.scrolling && this.currentPostID < this.checkTotalPosts() - 1) {
+                        this.currentPostID++;
+                        this.showPost(this.currentPostID);
+                    }
+                },
+                
+                showPreviousPost: function() {
+                    if (!this.scrolling && this.currentPostID > 0) {
+                        this.currentPostID--;
+                        this.showPost(this.currentPostID);
+                    }
+                },
+                
+                showPost: function(id) {
+                    if (!this.scrolling) {
+                        this.scrolling = true;
+                        $('html, body').animate({ scrollTop: $('.post').eq(id).offset().top + 1 }, {select:Scroll speed}, function() {
+                            
+                            _private.scrolling = false;
+                            _private.currentPostID = id;
+                        });
+                    }
+                },
+                
+                // ===============================
+                // Load more
+                // ===============================
+                checkLoadMore: function() {
+                    var scrollTop = $(window).scrollTop();
+                    var windowHeight = $(window).height();
+                    var docHeight = $(document).height();
+                    if ((scrollTop + windowHeight) > (docHeight - 100)) {
+                        this.loadNextPage();
+                    }
+                },
+                
+                loadNextPage: function() {
+                    if (!this.loading) {
+                        if (this.nextUrl) {
+                            this.loading = true;
+                            $.ajax({
+                               beforeSend: this.beforeLoad(),
+                               url: this.nextUrl,
+                               success: function(data) {
+                                   _private.loadComplete(data);
+                               }
+                            });
+                        } else {
+                            console.log('you are at the end');
+                        }
+                    }
+                },
+                
+                beforeLoad: function() {
+                    $('body').addClass('loading');
+                },
+                
+                loadComplete: function(data) {
+                    var posts = $(data).find('.posts').html();
+                    this.nextUrl = $(data).find('.next-page').attr('href');
+                    $('.posts').append(posts);
+                    this.loading = false;
+                    // Prepare all new posts
+                    this.getTotalPosts();
+                    this.preparePosts();
+                    $('body').removeClass('loading');
+                },
+                
+                // ===============================
+                // Listeners stuff
+                // ===============================
+                onInfoTriggerClicked: function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    var id = $(e.currentTarget).closest('.post').index();
+                    this.toggleInfo(id);
+                },
+                
+                reactToMouseWheel: function(e) {
+                    console.log('reactToMouseWheel', e)
+        			var deltaY = e.deltaY || -e.wheelDeltaY;
+        			console.log('delta y: ', deltaY);
+        			if (deltaY > 0) {
+        			    console.log('scroll up');
+        			    this.showPreviousPost();
+        				// Scroll down one section
+        				// this.onNextClicked(e);
+        			} else {
+        			    console.log('scroll down');
+        			    this.showNextPost()
+        				// Scroll up one section
+        				// this.onPreviousClicked(e); 
+        			}
+        			e.stopPropagation();
+        			e.preventDefault();
+        		},
+                
+                onMouseWheelScrolled: function(e) {
+    				this.currentScrollTime = new Date();
+    				var preventScrolling = false;
+    				if (this.currentScrollTime.getTime() - this.prevScrollTime.getTime() < 100) {
+    					preventScrolling = true;
+    				}
+    				this.prevScrollTime = this.currentScrollTime;
+    				if (!preventScrolling) {
+    					this.reactToMouseWheel(e);
+    				}
+    				e.stopPropagation();
+    				e.preventDefault();
+        		},
+                
+                loadMoreScrolling: function() {
+                  if (this.scrollTimer) {
+                      clearTimeout(this.scrollTimer);
+                      this.scrollTimer = null;
+                  }
+                  this.checkLoadMore();
+                },
+                
+                checkPostHeight: function() {
+                    this.SELECTOR.find('.post').each(function() {
+                        var table = $(this).find('.post-inner__table');
+                        var _readMore = $(this).find('.read-more');
+                        if (table.outerHeight() > $(window).height()) {
+                            _readMore.addClass('active');
+                        } else {
+                            _readMore.removeClass('active');
+                        }
+                    })
+                },
+                
+                onWindowKeyup: function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    if (e.keyCode === 40) {
+                        this.showNextPost();
+                    } else if (e.keyCode === 38) {
+                        this.showPreviousPost();
+                    }
+                },
+                
+                onWindowScroll: function(e) {
+                    if (!this.scrollTimer) this.scrollTimer = setTimeout(function() {_private.scroll();}, 100);
+                },
+                
+                scroll: function() {
+                  if (this.scrollTimer) {
+                      clearTimeout(this.scrollTimer);
+                      this.scrollTimer = null;
+                  }
+                  this.checkLoadMore();
+                },
+                
+                onWindowResize: function (e) {
+                    this.checkPostHeight();
+                },
+                
+                createListeners: function() {
+                    this.SELECTOR.on('click', '.info-trigger a', function(e) { _private.onInfoTriggerClicked(e); });
+                    $(window).on('scroll', function(e) { _private.onWindowScroll(e); });
+                    $(window).on('resize', function(e) { _private.onWindowResize(e); });
+                    if (this.scrollSnapEnabled) {
+                        document.documentElement.addEventListener("mousewheel", function(e) {_private.onMouseWheelScrolled(e);});
+				        document.documentElement.addEventListener("wheel", function(e) {_private.onMouseWheelScrolled(e);});
+                        // $(document).on("mousewheel", function(e) {_private.onMouseWheelScrolled(e);});
+				        // $(document).on("wheel", function(e) {_private.onMouseWheelScrolled(e);});
+                    }
+                }
+            }
+            
+            _private.init();
+            return _public;
+        }
+        
+        STORY.posts();
+    </script>
+  </body>
 </html>
