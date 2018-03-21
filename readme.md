@@ -2,7 +2,7 @@
 
 ##### Examples
 - [http://layout-theme.tumblr.com](http://layout-theme.tumblr.com/)
-- [http://utility-feed.tumblr.com](http://utility-feed.tumblr.com/)
+- [http://utilityfeed.tumblr.com](http://utilityfeed.tumblr.com/)
 
 ---
 
